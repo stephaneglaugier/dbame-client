@@ -1,9 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { View, Text, TextInput, StyleSheet } from 'react-native';
-import { green100 } from 'react-native-paper/lib/typescript/styles/themes/v2/colors';
 
 const InputBox = ({ name , inputText, setInputText}) => {
-  // const [inputText, setInputText] = useState('');
 
   return (
     <View style={styles.container}>

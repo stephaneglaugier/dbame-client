@@ -1,27 +1,35 @@
 import React from 'react';
 import { Text, View, StyleSheet, ScrollView } from 'react-native';
-import RegisterForm from './components/RegisterForm';
-import RegisterToVote from './components/RegisterToVotePOST';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-
+import RegisterToVote from './components/RegisterToVote';
+import Home from './components/Home';
+import RequestBallot from './components/RequestBallot';
 
 const App = () => {
+
+  const Stack = createNativeStackNavigator();
+
   return (
-    <ScrollView>
-      <View style={{ paddingTop: 50, paddingBottom: 50, paddingLeft: 20, paddingRight: 20 }}>
-        <View style={styles.center}>
-          <Text>Hello and welcome to d-BAME!</Text>
-        </View>
-        <RegisterForm />
-      </View>
-    </ScrollView>
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen name="Welcome to d-BAME" component={Home} />
+        <Stack.Screen name="Register To Vote" component={RegisterToVote} />
+        <Stack.Screen name="Request Ballot" component={RequestBallot} />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 };
 
 export default App;
 
 const styles = StyleSheet.create({
-  center: {
-    alignItems: 'center',
+  text: {
+    marginTop: 30,
+    marginLeft: 30,
+    marginRight: 30,
+    marginBottom: 30,
+    alignItems: 'center'
   }
 });
