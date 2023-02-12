@@ -6,6 +6,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import RegisterToVote from './components/RegisterToVote';
 import Home from './components/Home';
 import RequestBallot from './components/RequestBallot';
+import DecryptBallot from './components/DecryptBallot';
 
 const App = () => {
 
@@ -17,6 +18,7 @@ const App = () => {
         <Stack.Screen name="Welcome to d-BAME" component={Home} />
         <Stack.Screen name="Register To Vote" component={RegisterToVote} />
         <Stack.Screen name="Request Ballot" component={RequestBallot} />
+        <Stack.Screen name="Decrypt Ballot" component={DecryptBallot} />
       </Stack.Navigator>
     </NavigationContainer>
   );

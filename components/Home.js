@@ -17,6 +17,12 @@ const Home = ({ navigation }) => {
                 onPress={() =>
                     navigation.navigate('Request Ballot')
                 }>Request Ballot </Button>
+            <Button
+                style={styles.button}
+                mode="contained"
+                onPress={() =>
+                    navigation.navigate('Decrypt Ballot')
+                }>Decrypt Ballot </Button>
 
         </View>
 

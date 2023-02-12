@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, TextInput, StyleSheet } from 'react-native';
 
-const InputBox = ({ name, inputText, setInputText }) => {
+const DoubleInputBox = ({ name, inputText1, setInputText1, inputText2, setInputText2 }) => {
 
   return (
     <View style={styles.container}>
@@ -9,8 +9,16 @@ const InputBox = ({ name, inputText, setInputText }) => {
       <View style={styles.inputContainer}>
         <TextInput
           style={styles.input}
-          onChangeText={text => setInputText(text)}
-          value={inputText}
+          onChangeText={text => setInputText1(text)}
+          value={inputText1}
+          padding={0}
+        />
+      </View>
+      <View style={styles.inputContainer}>
+        <TextInput
+          style={styles.input}
+          onChangeText={text => setInputText2(text)}
+          value={inputText2}
           padding={0}
         />
       </View>
@@ -35,4 +43,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default InputBox;
+export default DoubleInputBox;

@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { View, StyleSheet, ScrollView } from 'react-native';
 import InputBox from './InputBox';
 import { Button, Text } from "react-native-paper";
+import JSONText from './JSONText';
+
 
 const RequestBallot = ({navigation}) => {
     const [idNumber, setIdNumber] = useState('1');
@@ -34,7 +36,7 @@ const RequestBallot = ({navigation}) => {
                     "w": w
                 })
             };
-            const response = await fetch('http://192.168.0.16:8080/moderator/requestBallot', requestOptions)
+            const response = await fetch('http://192.168.0.4:8080/moderator/requestBallot', requestOptions)
             const json = await response.json();
             console.debug(response.status)
             console.debug(json)
@@ -60,11 +62,7 @@ const RequestBallot = ({navigation}) => {
                 Request</Button>
 
             <View style={styles.response}>
-                {Object.keys(response).map((key, index) => (
-                    <View key={index}>
-                        <Text>{key}: {response[key]}</Text>
-                    </View>
-                ))}
+                <JSONText data={response} />
             </View>
         </ScrollView>
     );
