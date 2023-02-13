@@ -14,10 +14,10 @@ const DecryptBallot = ({ navigation }) => {
     const DEFAULT_RADIX = 16;
     const P = bigInt('6FA3', DEFAULT_RADIX);
 
-    const [eBC1, setEBC1] = useState('3f5c');
-    const [eBC2, setEBC2] = useState('d6ea4d0');
-    const [encryptedBallot, setEncryptedBallot] = useState('D5PFH5Cxl0Sr2aq97BityyLwo/k+j4SFAnaGT6zX7k8DwHs7untRfA+xjbTE29rc');
-    const [ephemeralKey, setEphemeralKey] = useState('4f9b');
+    const [eBC1, setEBC1] = useState('5dde');
+    const [eBC2, setEBC2] = useState('6e4a12d');
+    const [encryptedBallot, setEncryptedBallot] = useState('ut5GUPwefaMqngqyQI9OdKgixd+1rXovtlqpSYksWIzHOVZI9MuRrzfpTGxQq2ew');
+    const [ephemeralKey, setEphemeralKey] = useState('1ddb');
     const [privateKey, setPrivateKey] = useState('3039');
 
     const decryptBlindFactor = (_eBC1, _eBC2, _privateKey) => {
@@ -38,32 +38,23 @@ const DecryptBallot = ({ navigation }) => {
 
     const decryptBallot = (_encryptionKey, _encryptedBallot) => {
 
-        console.debug(_encryptionKey, _encryptedBallot);
-
         var _keyBytes = aesjs.utils.hex.toBytes(_encryptionKey);
         var _paddedKey = new Uint8Array(32);
         _paddedKey.set(new Uint8Array(_keyBytes));
 
         _decodedBallot = Buffer.from(_encryptedBallot, 'base64');
 
-        console.debug(_paddedKey.toString());
-        console.debug(_decodedBallot.toString());
-
-
         // The initialization vector (must be 16 bytes)
         var iv = aesjs.utils.hex.toBytes("F27D5C9927726BCEFE7510B1BDD3D137");
 
-        // The cipher-block chaining mode of operation maintains internal
-        // state, so to decrypt a new instance must be instantiated.
         var aesCbc = new aesjs.ModeOfOperation.cbc(_paddedKey, iv);
+
         var decryptedBytes = aesCbc.decrypt(_decodedBallot);
-        console.log(decryptedBytes);
+
         // Convert our bytes back into text
-        var decryptedText = aesjs.utils.utf8.fromBytes(decryptedBytes);
-        console.log(decryptedText);
-        // "TextMustBe16Byte"
-        
-        return;
+        var decryptedText = aesjs.utils.utf8.fromBytes(decryptedBytes.slice(0, 32));
+
+        return decryptedText;
     }
 
     const handleSubmit = () => {
@@ -77,7 +68,7 @@ const DecryptBallot = ({ navigation }) => {
 
         const ballot = decryptBallot(encryptionKey, encryptedBallot);
 
-        // console.debug(ballot);
+        console.debug(ballot);
 
     }
 
