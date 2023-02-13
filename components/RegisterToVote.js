@@ -3,20 +3,16 @@ import { View, StyleSheet, ScrollView } from 'react-native';
 import InputBox from './InputBox';
 import { Button, Text } from "react-native-paper";
 import JSONText from './JSONText';
-
+import DBAMEContext from './dbameContext';
 
 const RegisterToVote = ({ navigation }) => {
-    const [idNumber, setIdNumber] = useState('1');
-    const [firstName, setFirstName] = useState('Stephane');
-    const [lastName, setLastName] = useState('Augier');
-    const [dob, setDob] = useState('20010618');
-    const [publicKey, setPublicKey] = useState('1');
 
     const [response, setResponse] = useState('');
 
+    const context = React.useContext(DBAMEContext);
 
     const handleSubmit = async () => {
-        console.debug('Form submitted:', { idNumber, lastName, dob, firstName, publicKey });
+        // console.debug('Form submitted:', { idNumber, lastName, dob, firstName, publicKey });
         try {
             const requestOptions = {
                 method: 'POST',
@@ -25,17 +21,19 @@ const RegisterToVote = ({ navigation }) => {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    "id": parseInt(idNumber),
-                    "firstName": firstName,
-                    "lastName": lastName,
-                    "dob": dob,
-                    "publicKey": publicKey
+                    "id": parseInt(context.idNumber),
+                    "firstName": context.firstName,
+                    "lastName": context.lastName,
+                    "dob": context.dob,
+                    "publicKey": context.publicKey
                 })
             };
-            const response = await fetch('http://192.168.0.4:8080/registrar/registerToVote', requestOptions)
+            const response = await fetch('http://10.204.251.7:8080/registrar/registerToVote', requestOptions)
             const json = await response.json();
             console.debug(response.status)
             console.debug(json)
+            context.setW(json.w);
+            context.setS(json.s);
             setResponse(json);
         }
         catch (error) {
@@ -45,11 +43,11 @@ const RegisterToVote = ({ navigation }) => {
 
     return (
         <ScrollView>
-            <InputBox name={"ID:"} inputText={idNumber} setInputText={setIdNumber}></InputBox>
-            <InputBox name={"First Name:"} inputText={firstName} setInputText={setFirstName}></InputBox>
-            <InputBox name={"Last Name:"} inputText={lastName} setInputText={setLastName}></InputBox>
-            <InputBox name={"DOB:"} inputText={dob} setInputText={setDob}></InputBox>
-            <InputBox name={"Public Key:"} inputText={publicKey} setInputText={setPublicKey}></InputBox>
+            <InputBox name={"ID:"} inputText={context.idNumber} setInputText={context.setIdNumber}></InputBox>
+            <InputBox name={"First Name:"} inputText={context.firstName} setInputText={context.setFirstName}></InputBox>
+            <InputBox name={"Last Name:"} inputText={context.lastName} setInputText={context.setLastName}></InputBox>
+            <InputBox name={"DOB:"} inputText={context.dob} setInputText={context.setDob}></InputBox>
+            <InputBox name={"Public Key:"} inputText={context.publicKey} setInputText={context.setPublicKey}></InputBox>
 
             <Button style={styles.button} mode="contained" onPress={handleSubmit} >
                 Register</Button>

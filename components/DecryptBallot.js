@@ -4,8 +4,13 @@ import InputBox from './InputBox';
 import { Button, Text } from "react-native-paper";
 import DoubleInputBox from './DoubleInputBox';
 import { decode as atob, encode as btoa } from 'base-64'
+import DBAMEContext from './dbameContext';
+import JSONText from './JSONText';
+
 
 const DecryptBallot = ({ navigation }) => {
+
+    const [result, setResult] = useState('');
 
     var bigInt = require("big-integer");
     var Buffer = require('buffer/').Buffer
@@ -14,11 +19,7 @@ const DecryptBallot = ({ navigation }) => {
     const DEFAULT_RADIX = 16;
     const P = bigInt('6FA3', DEFAULT_RADIX);
 
-    const [eBC1, setEBC1] = useState('5dde');
-    const [eBC2, setEBC2] = useState('6e4a12d');
-    const [encryptedBallot, setEncryptedBallot] = useState('ut5GUPwefaMqngqyQI9OdKgixd+1rXovtlqpSYksWIzHOVZI9MuRrzfpTGxQq2ew');
-    const [ephemeralKey, setEphemeralKey] = useState('1ddb');
-    const [privateKey, setPrivateKey] = useState('3039');
+    const context = React.useContext(DBAMEContext);
 
     const decryptBlindFactor = (_eBC1, _eBC2, _privateKey) => {
         const _eBC1BI = bigInt(_eBC1, DEFAULT_RADIX);
@@ -58,43 +59,44 @@ const DecryptBallot = ({ navigation }) => {
     }
 
     const handleSubmit = () => {
-        const blindFactor = decryptBlindFactor(eBC1, eBC2, privateKey);
+        const blindFactor = decryptBlindFactor(context.eBC1, context.eBC2, context.privateKey);
 
-        console.debug(blindFactor);
+        const encryptionKey = decryptEphemeralKey(context.ephemeralKey, context.privateKey, blindFactor);
 
-        const encryptionKey = decryptEphemeralKey(ephemeralKey, privateKey, blindFactor);
+        const ballot = decryptBallot(encryptionKey, context.encryptedBallot);
 
-        console.debug(encryptionKey);
+        console.debug({blindFactor, encryptionKey, ballot});
 
-        const ballot = decryptBallot(encryptionKey, encryptedBallot);
-
-        console.debug(ballot);
-
+        setResult(ballot);
     }
 
     return (
         <ScrollView>
             <DoubleInputBox
                 name={"Encrypted Blind Bactor"}
-                inputText1={eBC1}
-                setInputText1={setEBC1}
-                inputText2={eBC2}
-                setInputText2={setEBC2} />
+                inputText1={context.eBC1}
+                setInputText1={context.setEBC1}
+                inputText2={context.eBC2}
+                setInputText2={context.setEBC2} />
             <InputBox
                 name={"Encrypted Ballot"}
-                inputText={encryptedBallot}
-                setInputText={setEncryptedBallot} />
+                inputText={context.encryptedBallot}
+                setInputText={context.setEncryptedBallot} />
             <InputBox
                 name={"Ephemeral Key:"}
-                inputText={ephemeralKey}
-                setInputText={setEphemeralKey} />
+                inputText={context.ephemeralKey}
+                setInputText={context.setEphemeralKey} />
             <InputBox
                 name={"Private Key"}
-                inputText={privateKey}
-                setInputText={setPrivateKey} />
+                inputText={context.privateKey}
+                setInputText={context.setPrivateKey} />
 
             <Button style={styles.button} mode="contained" onPress={handleSubmit} >
                 Request</Button>
+
+            <View style={styles.result}>
+                <JSONText data={result} />
+            </View>
 
         </ScrollView>
     );
@@ -109,7 +111,7 @@ const styles = StyleSheet.create({
         marginRight: 50,
         alignItems: 'center'
     },
-    response: {
+    result: {
         marginTop: 30,
         marginLeft: 30,
         marginRight: 30,
