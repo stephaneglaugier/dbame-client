@@ -3,7 +3,7 @@ import { View, StyleSheet, ScrollView } from 'react-native';
 import InputBox from './InputBox';
 import { Button, Text } from "react-native-paper";
 import JSONText from './JSONText';
-import DBAMEContext from './dbameContext';
+import DBAMEContext from './Context';
 
 const RegisterToVote = ({ navigation }) => {
 
@@ -28,7 +28,7 @@ const RegisterToVote = ({ navigation }) => {
                     "publicKey": context.publicKey
                 })
             };
-            const response = await fetch('http://10.204.251.7:8080/registrar/registerToVote', requestOptions)
+            const response = await fetch(`${context.domain}/registrar/registerToVote`, requestOptions)
             const json = await response.json();
             console.debug(response.status)
             console.debug(json)

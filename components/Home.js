@@ -9,6 +9,12 @@ const Home = ({ navigation }) => {
                 style={styles.button}
                 mode="contained"
                 onPress={() =>
+                    navigation.navigate('Get Election Parameters')
+                }>Get Election Parameters </Button>
+            <Button
+                style={styles.button}
+                mode="contained"
+                onPress={() =>
                     navigation.navigate('Register To Vote')
                 }>Register To Vote </Button>
             <Button
@@ -23,6 +29,12 @@ const Home = ({ navigation }) => {
                 onPress={() =>
                     navigation.navigate('Decrypt Ballot')
                 }>Decrypt Ballot </Button>
+            <Button
+                style={styles.button}
+                mode="contained"
+                onPress={() =>
+                    navigation.navigate('Vote')
+                }>Vote </Button>
 
         </View>
 
@@ -43,6 +55,11 @@ const styles = StyleSheet.create({
         marginTop: 60,
         marginLeft: 30,
         marginRight: 30,
-        alignItems: 'center'
+        alignItems: 'center',
+        width: 250,
+        height: 50,
+        backgroundColor: 'purple',
+        justifyContent: 'center',
+        borderRadius: 15,
     },
 })

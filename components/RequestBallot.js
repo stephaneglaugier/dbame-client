@@ -3,7 +3,7 @@ import { View, StyleSheet, ScrollView } from 'react-native';
 import InputBox from './InputBox';
 import { Button, Text } from "react-native-paper";
 import JSONText from './JSONText';
-import DBAMEContext from './dbameContext';
+import DBAMEContext from './Context';
 
 
 const RequestBallot = ({navigation}) => {
@@ -30,7 +30,7 @@ const RequestBallot = ({navigation}) => {
                     "w": context.w
                 })
             };
-            const response = await fetch('http://10.204.251.7:8080/moderator/requestBallot', requestOptions)
+            const response = await fetch(`${context.domain}/moderator/requestBallot`, requestOptions)
             const json = await response.json();
             console.debug(response.status);
             console.debug(json);
