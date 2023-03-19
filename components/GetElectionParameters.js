@@ -21,14 +21,20 @@ const GetElectionParameters = ({ navigation }) => {
             };
             const response = await fetch(`${context.domain}/registrar/electionParams`, requestOptions)
             const json = await response.json();
-            console.debug(response.status)
-            console.debug(json)
-            context.setDbameVersion(json.dbameVersion)
-            context.setP(json.p)
-            context.setG(json.g)
-            context.setIv(json.iv)
-            context.setCandidates(json.candidates)
-            context.setVotes(new Array(context.candidates.length).fill(false))
+            console.debug(response.status);
+            console.debug(json);
+            context.setDbameVersion(json.dbameVersion);
+            context.setP(json.p);
+            context.setG(json.g);
+            context.setIv(json.iv);
+            context.setCandidates(json.candidates);
+            context.setVotes(new Array(context.candidates.length).fill(false));
+            context.setContractAddress(json.contractAddress);
+            context.setContractNetwork(json.contractNetwork);
+            context.setVotingNode(json.votingNode);
+            context.setVotingClient(json.votingClient);
+            context.setElectionState(json.electionState);
+
             setResponse(json);
         }
         catch (error) {

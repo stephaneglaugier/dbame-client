@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import './global';
 
 import RegisterToVote from './components/RegisterToVote';
 import Home from './components/Home';
@@ -9,6 +10,7 @@ import RequestBallot from './components/RequestBallot';
 import DecryptBallot from './components/DecryptBallot';
 import DBAMEContext from './components/Context';
 import Vote from './components/Vote';
+import SubmitVote from './components/SumbitVote';
 import GetElectionParameters from './components/GetElectionParameters';
 
 const App = () => {
@@ -16,12 +18,17 @@ const App = () => {
 	const Stack = createNativeStackNavigator()
 
 	// Election parameters
-	const [domain, setDomain] = useState('http://10.204.251.7:8080');
+	const [domain, setDomain] = useState('http://192.168.0.16:8080');
 	const [dbameVersion, setDbameVersion] = useState('');
 	const [p, setP] = useState('');
 	const [g, setG] = useState('');
 	const [iv, setIv] = useState('');
 	const [candidates, setCandidates] = useState([]);
+	const [contractAddress, setContractAddress] = useState('');
+	const [contractNetwork, setContractNetwork] = useState('');
+	const [votingNode, setVotingNode] = useState('');
+	const [votingClient, setVotingClient] = useState(''); 
+	const [electionState, setElectionState] = useState('');
 
 	// Register to vote parameters
 	const [idNumber, setIdNumber] = useState('1');
@@ -52,6 +59,11 @@ const App = () => {
 		g, setG,
 		iv, setIv,
 		candidates, setCandidates,
+		contractAddress, setContractAddress,
+		contractNetwork, setContractNetwork,
+		votingNode, setVotingNode,
+		votingClient, setVotingClient,
+		electionState, setElectionState,
 
 		idNumber, setIdNumber,
 		firstName, setFirstName,
@@ -83,6 +95,7 @@ const App = () => {
 					<Stack.Screen name="Request Ballot" component={RequestBallot} />
 					<Stack.Screen name="Decrypt Ballot" component={DecryptBallot} />
 					<Stack.Screen name="Vote" component={Vote} />
+					<Stack.Screen name="Submit Vote" component={SubmitVote} />
 				</Stack.Navigator>
 			</NavigationContainer>
 		</DBAMEContext.Provider>
