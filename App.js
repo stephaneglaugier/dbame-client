@@ -35,7 +35,7 @@ const App = () => {
 	const [firstName, setFirstName] = useState('Stephane');
 	const [lastName, setLastName] = useState('Augier');
 	const [dob, setDob] = useState('20010618');
-	const [publicKey, setPublicKey] = useState('2775');
+	const [publicKey, setPublicKey] = useState('82ca0dd7700490be21c376b7d0068dfc00d36af359de92ff52081dded770f893');
 
 	// Request ballot parameters
 	const [s, setS] = useState('');
@@ -46,7 +46,7 @@ const App = () => {
 	const [eBC2, setEBC2] = useState('');
 	const [encryptedBallot, setEncryptedBallot] = useState('');
 	const [ephemeralKey, setEphemeralKey] = useState('');
-	const [privateKey, setPrivateKey] = useState('');
+	const [privateKey, setPrivateKey] = useState('4ceb41c527d79e4b6dae9d451a4d8c1c1ca4ff3113d14451bd5152829226f3fd');
 	const [ballot, setBallot] = useState('');
 
 	// Vote parameters

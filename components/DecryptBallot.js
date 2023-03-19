@@ -57,7 +57,7 @@ const DecryptBallot = ({ navigation }) => {
         _decodedBallot = Buffer.from(_encryptedBallot, 'base64');
 
         // The initialization vector (must be 16 bytes)
-        var iv = aesjs.utils.hex.toBytes("F27D5C9927726BCEFE7510B1BDD3D137");
+        var iv = aesjs.utils.hex.toBytes(context.iv);
 
         var aesCbc = new aesjs.ModeOfOperation.cbc(_paddedKey, iv);
 
@@ -65,7 +65,7 @@ const DecryptBallot = ({ navigation }) => {
 
         // Convert our bytes back into text
         var decryptedText = aesjs.utils.utf8.fromBytes(decryptedBytes.slice(0, 32));
-
+        
         return decryptedText;
     }
 
