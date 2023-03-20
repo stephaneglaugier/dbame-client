@@ -7,7 +7,6 @@ import { decode as atob, encode as btoa } from 'base-64'
 import DBAMEContext from './Context';
 import JSONText from './JSONText';
 
-
 const DecryptBallot = ({ navigation }) => {
 
     const [fullText, setFullText] = useState('');
@@ -25,6 +24,8 @@ const DecryptBallot = ({ navigation }) => {
     var bigInt = require("big-integer");
     var Buffer = require('buffer/').Buffer
     var aesjs = require("aes-js");
+    const TextEncodingPolyfill = require('text-encoding');
+
 
     const DEFAULT_RADIX = 16;
 
@@ -50,19 +51,17 @@ const DecryptBallot = ({ navigation }) => {
 
     const decryptBallot = (_encryptionKey, _encryptedBallot) => {
 
-        var _keyBytes = aesjs.utils.hex.toBytes(_encryptionKey);
-        const _keyLength = 32;
-        const _paddedKey = new Uint8Array(_keyLength);
-        for (let i = 0; i < _keyLength && i < _keyBytes.length; i++) {
-            _paddedKey[i] = _keyBytes[i];
-        }
+        const password = keyToPassword(_encryptionKey, 32);
+        console.debug({password : password.toString()});
+        const _keyBytes = new TextEncodingPolyfill.TextEncoder().encode(password);
+        console.debug({_keyBytes : _keyBytes.toString()});
 
         _decodedBallot = Buffer.from(_encryptedBallot, 'base64');
 
         // The initialization vector (must be 16 bytes)
         var iv = aesjs.utils.hex.toBytes(context.iv);
 
-        var aesCbc = new aesjs.ModeOfOperation.cbc(_paddedKey, iv);
+        var aesCbc = new aesjs.ModeOfOperation.cbc(_keyBytes, iv);
 
         var decryptedBytes = aesCbc.decrypt(_decodedBallot);
 
@@ -73,12 +72,13 @@ const DecryptBallot = ({ navigation }) => {
     }
 
     const readBallot = (_ballot) => {
-        const _a = _ballot.slice(0, 16);
-        const _b = _ballot.slice(16, 24);
-        const _c = _ballot.slice(24);
+        const _a = _ballot.slice(0, 8);
+        const _b = _ballot.slice(8, 16);
+        const _c = _ballot.slice(16, 24);
+        const _d = _ballot.slice(24);
 
         const id = parseInt(_a).toString();
-        const date = new Date(parseInt(_b, 16) * 1000);
+        const date = new Date(parseInt(_b, DEFAULT_RADIX) * 1000);
         const randInt = parseInt(_c, DEFAULT_RADIX);
 
         setFullText(_ballot);
@@ -101,6 +101,25 @@ const DecryptBallot = ({ navigation }) => {
         context.setBallot(ballot)
 
         console.debug(result);
+    }
+
+    const keyToPassword = (keyString, length) => {
+            
+        if (keyString.length < length) {
+            const nZeros = length - keyString.length;
+            let zeros = "";
+            for (let i = 0; i < nZeros; i++) {
+                zeros = zeros + "0";
+            }
+            keyString = zeros + keyString;
+        } else if (keyString.length > length) {
+            keyString = keyString.substring(keyString.length - 32);
+        }
+    
+        if (keyString.length !== length) {
+            throw new Error("Error when converting key to password.");
+        }
+        return keyString;
     }
 
     return (
