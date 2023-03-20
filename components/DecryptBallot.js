@@ -51,8 +51,11 @@ const DecryptBallot = ({ navigation }) => {
     const decryptBallot = (_encryptionKey, _encryptedBallot) => {
 
         var _keyBytes = aesjs.utils.hex.toBytes(_encryptionKey);
-        var _paddedKey = new Uint8Array(32);
-        _paddedKey.set(new Uint8Array(_keyBytes));
+        const _keyLength = 32;
+        const _paddedKey = new Uint8Array(_keyLength);
+        for (let i = 0; i < _keyLength && i < _keyBytes.length; i++) {
+            _paddedKey[i] = _keyBytes[i];
+        }
 
         _decodedBallot = Buffer.from(_encryptedBallot, 'base64');
 

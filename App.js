@@ -35,7 +35,7 @@ const App = () => {
 	const [firstName, setFirstName] = useState('Stephane');
 	const [lastName, setLastName] = useState('Augier');
 	const [dob, setDob] = useState('20010618');
-	const [publicKey, setPublicKey] = useState('82ca0dd7700490be21c376b7d0068dfc00d36af359de92ff52081dded770f893');
+	const [publicKey, setPublicKey] = useState('987966b30b904653bab0f6e234fa0442cac5e4a779124cd4c9fd6ea176852a4d99977364e5d2d68963816fb7303bbb8a2eced97626eaf216e67d0a121c32facd22746e72a6975761a5df7520891d2089b61f09629ac43148542a9a686d823ab9fb4dbfc8936f8a0e1eb66780a43edf6e9ab5f8314512b76b1d2d294b8f24d0184c38341806b0eac08d7ab2dc34095a945e49ec1f3bf88207b226f9775e807006db92d10a5a8894948ff8824adb74219c7613b0ceccb0cb25e6ed3d16d012aa58d20c0caa282e4a4352b11c60b3e3acd0d7c8382ce9616288b99439c83f17f714a990537715d7bea14dcb67135c5fa25a895baa7d01d63043abec5a3c9cfaecf4');
 
 	// Request ballot parameters
 	const [s, setS] = useState('');
@@ -46,7 +46,7 @@ const App = () => {
 	const [eBC2, setEBC2] = useState('');
 	const [encryptedBallot, setEncryptedBallot] = useState('');
 	const [ephemeralKey, setEphemeralKey] = useState('');
-	const [privateKey, setPrivateKey] = useState('4ceb41c527d79e4b6dae9d451a4d8c1c1ca4ff3113d14451bd5152829226f3fd');
+	const [privateKey, setPrivateKey] = useState('1234');
 	const [ballot, setBallot] = useState('');
 
 	// Vote parameters
