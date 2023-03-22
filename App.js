@@ -10,7 +10,7 @@ import RequestBallot from './components/RequestBallot';
 import DecryptBallot from './components/DecryptBallot';
 import DBAMEContext from './components/Context';
 import Vote from './components/Vote';
-import SubmitVote from './components/SumbitVote';
+import EncryptBallot from './components/EncryptBallot';
 import GetElectionParameters from './components/GetElectionParameters';
 
 const App = () => {
@@ -29,13 +29,15 @@ const App = () => {
 	const [votingNode, setVotingNode] = useState('');
 	const [votingClient, setVotingClient] = useState(''); 
 	const [electionState, setElectionState] = useState('');
+	const [yR, setYR] = useState('');
+	const [yM, setYM] = useState('');
 
 	// Register to vote parameters
 	const [idNumber, setIdNumber] = useState('1');
 	const [firstName, setFirstName] = useState('Stephane');
 	const [lastName, setLastName] = useState('Augier');
 	const [dob, setDob] = useState('20010618');
-	const [publicKey, setPublicKey] = useState('987966b30b904653bab0f6e234fa0442cac5e4a779124cd4c9fd6ea176852a4d99977364e5d2d68963816fb7303bbb8a2eced97626eaf216e67d0a121c32facd22746e72a6975761a5df7520891d2089b61f09629ac43148542a9a686d823ab9fb4dbfc8936f8a0e1eb66780a43edf6e9ab5f8314512b76b1d2d294b8f24d0184c38341806b0eac08d7ab2dc34095a945e49ec1f3bf88207b226f9775e807006db92d10a5a8894948ff8824adb74219c7613b0ceccb0cb25e6ed3d16d012aa58d20c0caa282e4a4352b11c60b3e3acd0d7c8382ce9616288b99439c83f17f714a990537715d7bea14dcb67135c5fa25a895baa7d01d63043abec5a3c9cfaecf4');
+	const [publicKey, setPublicKey] = useState('25f0c3f97b3832ca1312acf9e169e10f25dcd073967b53c7025d287253aa5f539c95d70af81f9c514a4c796d9acea1ba311b7b4d6df660d11e1b15114c9af3cc');
 
 	// Request ballot parameters
 	const [s, setS] = useState('');
@@ -64,6 +66,8 @@ const App = () => {
 		votingNode, setVotingNode,
 		votingClient, setVotingClient,
 		electionState, setElectionState,
+		yR, setYR,
+		yM, setYM,
 
 		idNumber, setIdNumber,
 		firstName, setFirstName,
@@ -95,7 +99,7 @@ const App = () => {
 					<Stack.Screen name="Request Ballot" component={RequestBallot} />
 					<Stack.Screen name="Decrypt Ballot" component={DecryptBallot} />
 					<Stack.Screen name="Vote" component={Vote} />
-					<Stack.Screen name="Submit Vote" component={SubmitVote} />
+					<Stack.Screen name="Encrypt Vote" component={EncryptBallot} />
 				</Stack.Navigator>
 			</NavigationContainer>
 		</DBAMEContext.Provider>

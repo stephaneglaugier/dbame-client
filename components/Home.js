@@ -39,8 +39,8 @@ const Home = ({ navigation }) => {
                 style={styles.button}
                 mode="contained"
                 onPress={() =>
-                    navigation.navigate('Submit Vote')
-                }>Submit Vote</Button>
+                    navigation.navigate('Encrypt Vote')
+                }>Encrypt Vote</Button>
         </View>
 
     );

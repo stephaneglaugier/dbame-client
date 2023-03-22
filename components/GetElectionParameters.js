@@ -28,12 +28,14 @@ const GetElectionParameters = ({ navigation }) => {
             context.setG(json.g);
             context.setIv(json.iv);
             context.setCandidates(json.candidates);
-            context.setVotes(new Array(context.candidates.length).fill(false));
+            context.setVotes(new Array(32).fill(false));
             context.setContractAddress(json.contractAddress);
             context.setContractNetwork(json.contractNetwork);
             context.setVotingNode(json.votingNode);
             context.setVotingClient(json.votingClient);
             context.setElectionState(json.electionState);
+            context.setYR(json.yR);
+            context.setYM(json.yM);
 
             setResponse(json);
         }
