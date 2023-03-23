@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text } from 'react-native';
+import globalStyles from '../globalStyles';
 
 const JSONText = ({ data }) => {
     const renderValue = (value) => {
@@ -21,10 +22,12 @@ const JSONText = ({ data }) => {
         return JSON.stringify(data, null, 2); // 2 spaces for indentation
     };
 
+    if (!data) {
+        return null;
+    }
+
     return (
-        <View>
-            <Text>{prettyPrint(data)}</Text>
-        </View>
+        <Text style={globalStyles.text}>{prettyPrint(data)}</Text>
     );
 };
 

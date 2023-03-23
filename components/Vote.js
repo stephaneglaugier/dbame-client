@@ -6,6 +6,7 @@ import DoubleInputBox from './DoubleInputBox';
 import DBAMEContext from './Context';
 import JSONText from './JSONText';
 import Ballot from './Ballot';
+import globalStyles from '../globalStyles';
 
 
 const Vote = ({ navigation }) => {
@@ -30,33 +31,19 @@ const Vote = ({ navigation }) => {
 
     return (
         <ScrollView >
-            <View style={styles.result}>
-                <InputBox name={"Ballot:"} inputText={context.ballot} setInputText={context.setBallot}></InputBox>
-                <Ballot switchData={context.candidates} />
+            <View style={globalStyles.container}>
+                <View style={globalStyles.result}>
+                    <InputBox name={"Ballot:"} inputText={context.ballot} setInputText={context.setBallot}></InputBox>
+                    <Ballot switchData={context.candidates} />
+                </View>
+                <Button style={globalStyles.button} mode="contained" onPress={handleSubmit} >
+                    Vote</Button>
+                <View style={globalStyles.result}>
+                    <JSONText data={context.ballot} />
+                </View>
             </View>
-            <Button style={styles.button} mode="contained" onPress={handleSubmit} >
-                Vote</Button>
-            <View style={styles.result}>
-                <JSONText data={context.ballot} />
-            </View>
-
         </ScrollView>
     );
 };
 
 export default Vote;
-
-const styles = StyleSheet.create({
-    button: {
-        marginTop: 30,
-        marginLeft: 50,
-        marginRight: 50,
-        alignItems: 'center'
-    },
-    result: {
-        marginTop: 30,
-        marginLeft: 30,
-        marginRight: 30,
-        marginBottom: 30
-    },
-})

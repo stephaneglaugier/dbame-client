@@ -1,18 +1,19 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, ScrollView, TextInput, TouchableOpacity, Clipboard } from 'react-native';
+import { View, ScrollView } from 'react-native';
 import InputBox from './InputBox';
-import { Button, Text } from "react-native-paper";
+import { Button } from "react-native-paper";
 import DBAMEContext from './Context';
 import JSONText from './JSONText';
 import CopyToClipboard from './CopyToClipboard';
 import TravelToDapp from './TravelToDapp';
+import globalStyles from '../globalStyles';
+import CustomButton from './CustomButton';
 
 const EncryptBallot = ({ navigation }) => {
 
     const context = React.useContext(DBAMEContext);
 
-    const [c3, setC3] = useState('');
-    const [c4, setC4] = useState('');
+    const [encryptedVote, setEncryptedVote] = useState('');
 
     var bigInt = require("big-integer");
 
@@ -41,7 +42,7 @@ const EncryptBallot = ({ navigation }) => {
         const _exponentiated = _product.modPow(_V, _P);
         const _c4 = _BALLOT.multiply(_exponentiated).mod(_P);
 
-        return { _c3: _c3.toString(DEFAULT_RADIX), _c4: _c4.toString(DEFAULT_RADIX) }
+        return { c3: _c3.toString(DEFAULT_RADIX), c4: _c4.toString(DEFAULT_RADIX) }
     }
 
     const decryptBallot = (c3, c4, xm, xr) => {
@@ -68,55 +69,24 @@ const EncryptBallot = ({ navigation }) => {
 
     const handleSubmit = () => {
 
-        const { _c3, _c4 } = encryptBallot();
-        setC3(_c3);
-        setC4(_c4);
-        console.log({ _c3, _c4 });
+        const { c3, c4 } = encryptBallot();
+        setEncryptedVote(c3 + "." + c4)
+        console.log(encryptedVote);
     }
 
     return (
         <ScrollView>
-            <View style={styles.text}>
+            <View style={globalStyles.container}>
                 <InputBox inputText={context.ballot} setInputText={context.setBallot} />
-                <Button style={styles.button} mode="contained" onPress={handleSubmit} >
-                    Encrypt</Button>
-                <View style={styles.result}>
-                    <JSONText data={{ c3, c4 }} />
+                <CustomButton onPress={handleSubmit} title="Encrypt" />
+                <View style={globalStyles.result}>
+                    <JSONText data={encryptedVote} />
                 </View>
-                <View style={styles.result}>
-                    <CopyToClipboard textToCopy={JSON.stringify({ c3, c4 })} />
-                </View>
-                <View style={styles.result}>
-                    <TravelToDapp />
-                </View>
-
-
+                <CopyToClipboard textToCopy={encryptedVote} />
+                <TravelToDapp />
             </View>
-
         </ScrollView>
     );
 };
 
 export default EncryptBallot;
-
-const styles = StyleSheet.create({
-    text: {
-        marginTop: 10,
-        marginLeft: 10,
-        marginRight: 10,
-        marginBottom: 10,
-        alignItems: 'center'
-    },
-    button: {
-        marginTop: 30,
-        marginLeft: 50,
-        marginRight: 50,
-        alignItems: 'center'
-    },
-    result: {
-        marginTop: 30,
-        marginLeft: 30,
-        marginRight: 30,
-        marginBottom: 30
-    }
-})

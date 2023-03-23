@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, ScrollView } from 'react-native';
+import { View, ScrollView } from 'react-native';
 import InputBox from './InputBox';
 import { Button, Text } from "react-native-paper";
 import JSONText from './JSONText';
 import DBAMEContext from './Context';
+import globalStyles from '../globalStyles';
+import CustomButton from './CustomButton';
 
 const GetElectionParameters = ({ navigation }) => {
 
@@ -46,32 +48,15 @@ const GetElectionParameters = ({ navigation }) => {
 
     return (
         <ScrollView>
-            <InputBox name={"Domain:"} inputText={context.domain} setInputText={context.setDomain}></InputBox>
-
-            <Button style={styles.button} mode="contained" onPress={handleSubmit} >
-                Retrieve</Button>
-
-            <View style={styles.response}>
-                <JSONText data={response} />
+            <View style={globalStyles.container}>
+                <InputBox name={"Domain:"} inputText={context.domain} setInputText={context.setDomain}></InputBox>
+                <CustomButton onPress={handleSubmit} title="Retrieve" />
+                <View style={globalStyles.response}>
+                    <JSONText data={response} />
+                </View>
             </View>
-
         </ScrollView>
     );
 };
 
 export default GetElectionParameters;
-
-const styles = StyleSheet.create({
-    button: {
-        marginTop: 30,
-        marginLeft: 50,
-        marginRight: 50,
-        alignItems: 'center'
-    },
-    response: {
-        marginTop: 30,
-        marginLeft: 30,
-        marginRight: 30,
-        marginBottom: 30
-    },
-})

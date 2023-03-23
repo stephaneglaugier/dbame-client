@@ -107,13 +107,3 @@ const App = () => {
 };
 
 export default App;
-
-const styles = StyleSheet.create({
-	text: {
-		marginTop: 30,
-		marginLeft: 30,
-		marginRight: 30,
-		marginBottom: 30,
-		alignItems: 'center'
-	}
-});

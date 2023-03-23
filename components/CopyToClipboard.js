@@ -1,35 +1,25 @@
 import React from 'react';
-import { StyleSheet, View, TouchableOpacity, Text, Clipboard } from 'react-native';
+import { StyleSheet, View, Text } from 'react-native';
+import Clipboard from '@react-native-community/clipboard';
+import { Button } from 'react-native-paper';
 import PropTypes from 'prop-types';
+import globalStyles from '../globalStyles';
+import CustomButton from './CustomButton';
 
 const CopyToClipboard = ({ textToCopy }) => {
 
-  const handleCopyToClipboard = async () => {
-    await Clipboard.setString(textToCopy);
-    alert('Copied to clipboard!');
-  };
+	const handleCopyToClipboard = async () => {
+		await Clipboard.setString(textToCopy);
+		// alert('Copied to clipboard!');
+	};
 
-  return (
-    <View>
-      <TouchableOpacity onPress={handleCopyToClipboard} style={styles.button}>
-        <Text style={{ color: 'black', textAlign: 'center' }}>Copy to Clipboard</Text>
-      </TouchableOpacity>
-    </View>
-  );
+	return (
+		<CustomButton onPress={handleCopyToClipboard} title="Copy to Clipboard" />
+	);
 };
 
 CopyToClipboard.propTypes = {
-  textToCopy: PropTypes.string.isRequired
+	textToCopy: PropTypes.string.isRequired
 };
 
 export default CopyToClipboard;
-
-
-const styles = StyleSheet.create({
-    button: {
-        marginTop: 30,
-        marginLeft: 50,
-        marginRight: 50,
-        alignItems: 'center'
-    }
-})

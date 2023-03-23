@@ -4,6 +4,8 @@ import InputBox from './InputBox';
 import { Button, Text } from "react-native-paper";
 import JSONText from './JSONText';
 import DBAMEContext from './Context';
+import globalStyles from '../globalStyles';
+import CustomButton from './CustomButton';
 
 const RegisterToVote = ({ navigation }) => {
 
@@ -43,36 +45,23 @@ const RegisterToVote = ({ navigation }) => {
 
     return (
         <ScrollView>
-            <InputBox name={"ID:"} inputText={context.idNumber} setInputText={context.setIdNumber}></InputBox>
-            <InputBox name={"First Name:"} inputText={context.firstName} setInputText={context.setFirstName}></InputBox>
-            <InputBox name={"Last Name:"} inputText={context.lastName} setInputText={context.setLastName}></InputBox>
-            <InputBox name={"DOB:"} inputText={context.dob} setInputText={context.setDob}></InputBox>
-            <InputBox name={"Public Key:"} inputText={context.publicKey} setInputText={context.setPublicKey}></InputBox>
+            <View style={globalStyles.container}>
+                <InputBox name={"ID:"} inputText={context.idNumber} setInputText={context.setIdNumber}></InputBox>
+                <InputBox name={"First Name:"} inputText={context.firstName} setInputText={context.setFirstName}></InputBox>
+                <InputBox name={"Last Name:"} inputText={context.lastName} setInputText={context.setLastName}></InputBox>
+                <InputBox name={"DOB:"} inputText={context.dob} setInputText={context.setDob}></InputBox>
+                <InputBox name={"Public Key:"} inputText={context.publicKey} setInputText={context.setPublicKey}></InputBox>
 
-            <Button style={styles.button} mode="contained" onPress={handleSubmit} >
-                Register</Button>
+                <CustomButton onPress={handleSubmit} title="Register" />
 
-            <View style={styles.response}>
-                <JSONText data={response} />
+                <View style={globalStyles.response}>
+                    <JSONText data={response} />
+                </View>
             </View>
+
 
         </ScrollView>
     );
 };
 
 export default RegisterToVote;
-
-const styles = StyleSheet.create({
-    button: {
-        marginTop: 30,
-        marginLeft: 50,
-        marginRight: 50,
-        alignItems: 'center'
-    },
-    response: {
-        marginTop: 30,
-        marginLeft: 30,
-        marginRight: 30,
-        marginBottom: 30
-    },
-})

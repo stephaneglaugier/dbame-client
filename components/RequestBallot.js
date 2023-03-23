@@ -4,9 +4,11 @@ import InputBox from './InputBox';
 import { Button, Text } from "react-native-paper";
 import JSONText from './JSONText';
 import DBAMEContext from './Context';
+import globalStyles from '../globalStyles';
+import CustomButton from './CustomButton';
 
 
-const RequestBallot = ({navigation}) => {
+const RequestBallot = ({ navigation }) => {
 
     const context = React.useContext(DBAMEContext);
 
@@ -47,38 +49,24 @@ const RequestBallot = ({navigation}) => {
 
     return (
         <ScrollView>
-            <InputBox name={"ID:"} inputText={context.idNumber} setInputText={context.setIdNumber}></InputBox>
-            <InputBox name={"First Name:"} inputText={context.firstName} setInputText={context.setFirstName}></InputBox>
-            <InputBox name={"Last Name:"} inputText={context.lastName} setInputText={context.setLastName}></InputBox>
-            <InputBox name={"DOB:"} inputText={context.dob} setInputText={context.setDob}></InputBox>
-            <InputBox name={"Public Key:"} inputText={context.publicKey} setInputText={context.setPublicKey}></InputBox>
-            <InputBox name={"S:"} inputText={context.s} setInputText={context.setS}></InputBox>
-            <InputBox name={"W:"} inputText={context.w} setInputText={context.setW}></InputBox>
+            <View style={globalStyles.container}>
+                <InputBox name={"ID:"} inputText={context.idNumber} setInputText={context.setIdNumber}></InputBox>
+                <InputBox name={"First Name:"} inputText={context.firstName} setInputText={context.setFirstName}></InputBox>
+                <InputBox name={"Last Name:"} inputText={context.lastName} setInputText={context.setLastName}></InputBox>
+                <InputBox name={"DOB:"} inputText={context.dob} setInputText={context.setDob}></InputBox>
+                <InputBox name={"Public Key:"} inputText={context.publicKey} setInputText={context.setPublicKey}></InputBox>
+                <InputBox name={"S:"} inputText={context.s} setInputText={context.setS}></InputBox>
+                <InputBox name={"W:"} inputText={context.w} setInputText={context.setW}></InputBox>
 
+                <CustomButton onPress={handleSubmit} title="Request"/>
 
-            <Button style={styles.button} mode="contained" onPress={handleSubmit} >
-                Request</Button>
-
-            <View style={styles.response}>
-                <JSONText data={response} />
+                <View style={globalStyles.response}>
+                    <JSONText data={response} />
+                </View>
             </View>
+
         </ScrollView>
     );
 };
 
 export default RequestBallot;
-
-const styles = StyleSheet.create({
-    button: {
-        marginTop: 30,
-        marginLeft: 50,
-        marginRight: 50,
-        alignItems: 'center'
-    },
-    response: {
-        marginTop: 30,
-        marginLeft: 30,
-        marginRight: 30,
-        marginBottom: 30
-    },
-})

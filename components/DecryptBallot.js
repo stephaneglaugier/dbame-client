@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, ScrollView } from 'react-native';
+import { View, ScrollView } from 'react-native';
 import InputBox from './InputBox';
 import { Button, Text } from "react-native-paper";
 import DoubleInputBox from './DoubleInputBox';
 import { decode as atob, encode as btoa } from 'base-64'
 import DBAMEContext from './Context';
 import JSONText from './JSONText';
+import globalStyles from '../globalStyles';
+import CustomButton from './CustomButton';
 
 const DecryptBallot = ({ navigation }) => {
 
@@ -52,9 +54,9 @@ const DecryptBallot = ({ navigation }) => {
     const decryptBallot = (_encryptionKey, _encryptedBallot) => {
 
         const password = keyToPassword(_encryptionKey, 32);
-        console.debug({password : password.toString()});
+        console.debug({ password: password.toString() });
         const _keyBytes = new TextEncodingPolyfill.TextEncoder().encode(password);
-        console.debug({_keyBytes : _keyBytes.toString()});
+        console.debug({ _keyBytes: _keyBytes.toString() });
 
         _decodedBallot = Buffer.from(_encryptedBallot, 'base64');
 
@@ -67,7 +69,7 @@ const DecryptBallot = ({ navigation }) => {
 
         // Convert our bytes back into text
         var decryptedText = aesjs.utils.utf8.fromBytes(decryptedBytes.slice(0, 32));
-        
+
         return decryptedText;
     }
 
@@ -104,7 +106,7 @@ const DecryptBallot = ({ navigation }) => {
     }
 
     const keyToPassword = (keyString, length) => {
-            
+
         if (keyString.length < length) {
             const nZeros = length - keyString.length;
             let zeros = "";
@@ -115,7 +117,7 @@ const DecryptBallot = ({ navigation }) => {
         } else if (keyString.length > length) {
             keyString = keyString.substring(keyString.length - 32);
         }
-    
+
         if (keyString.length !== length) {
             throw new Error("Error when converting key to password.");
         }
@@ -124,49 +126,32 @@ const DecryptBallot = ({ navigation }) => {
 
     return (
         <ScrollView>
-            <DoubleInputBox
-                name={"Encrypted Blind Bactor"}
-                inputText1={context.eBC1}
-                setInputText1={context.setEBC1}
-                inputText2={context.eBC2}
-                setInputText2={context.setEBC2} />
-            <InputBox
-                name={"Encrypted Ballot"}
-                inputText={context.encryptedBallot}
-                setInputText={context.setEncryptedBallot} />
-            <InputBox
-                name={"Ephemeral Key:"}
-                inputText={context.ephemeralKey}
-                setInputText={context.setEphemeralKey} />
-            <InputBox
-                name={"Private Key"}
-                inputText={context.privateKey}
-                setInputText={context.setPrivateKey} />
-
-            <Button style={styles.button} mode="contained" onPress={handleSubmit} >
-                Request</Button>
-
-            <View style={styles.result}>
-                <JSONText data={result} />
+            <View style={globalStyles.container}>
+                <DoubleInputBox
+                    name={"Encrypted Blind Bactor"}
+                    inputText1={context.eBC1}
+                    setInputText1={context.setEBC1}
+                    inputText2={context.eBC2}
+                    setInputText2={context.setEBC2} />
+                <InputBox
+                    name={"Encrypted Ballot"}
+                    inputText={context.encryptedBallot}
+                    setInputText={context.setEncryptedBallot} />
+                <InputBox
+                    name={"Ephemeral Key:"}
+                    inputText={context.ephemeralKey}
+                    setInputText={context.setEphemeralKey} />
+                <InputBox
+                    name={"Private Key"}
+                    inputText={context.privateKey}
+                    setInputText={context.setPrivateKey} />
+                <CustomButton onPress={handleSubmit} title="Request" />
+                <View style={globalStyles.result}>
+                    <JSONText data={result} />
+                </View>
             </View>
-
         </ScrollView>
     );
 };
 
 export default DecryptBallot;
-
-const styles = StyleSheet.create({
-    button: {
-        marginTop: 30,
-        marginLeft: 50,
-        marginRight: 50,
-        alignItems: 'center'
-    },
-    result: {
-        marginTop: 30,
-        marginLeft: 30,
-        marginRight: 30,
-        marginBottom: 30
-    },
-})
