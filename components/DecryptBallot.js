@@ -145,7 +145,7 @@ const DecryptBallot = ({ navigation }) => {
                     name={"Private Key"}
                     inputText={context.privateKey}
                     setInputText={context.setPrivateKey} />
-                <CustomButton onPress={handleSubmit} title="Request" />
+                <CustomButton onPress={handleSubmit} title="Decrypt" />
                 <View style={globalStyles.result}>
                     <JSONText data={result} />
                 </View>

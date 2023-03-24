@@ -6,6 +6,7 @@ import DoubleInputBox from './DoubleInputBox';
 import DBAMEContext from './Context';
 import JSONText from './JSONText';
 import Ballot from './Ballot';
+import CustomButton from './CustomButton';
 import globalStyles from '../globalStyles';
 
 
@@ -36,8 +37,7 @@ const Vote = ({ navigation }) => {
                     <InputBox name={"Ballot:"} inputText={context.ballot} setInputText={context.setBallot}></InputBox>
                     <Ballot switchData={context.candidates} />
                 </View>
-                <Button style={globalStyles.button} mode="contained" onPress={handleSubmit} >
-                    Vote</Button>
+                <CustomButton onPress={handleSubmit} title="Vote" />
                 <View style={globalStyles.result}>
                     <JSONText data={context.ballot} />
                 </View>
