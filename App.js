@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import './global';
@@ -18,7 +17,7 @@ const App = () => {
 	const Stack = createNativeStackNavigator()
 
 	// Election parameters
-	const [domain, setDomain] = useState('http://192.168.0.16:8080');
+	const [domain, setDomain] = useState('http://192.168.0.4:8080');
 	const [dbameVersion, setDbameVersion] = useState('');
 	const [p, setP] = useState('');
 	const [g, setG] = useState('');
@@ -33,11 +32,11 @@ const App = () => {
 	const [yM, setYM] = useState('');
 
 	// Register to vote parameters
-	const [idNumber, setIdNumber] = useState('1');
-	const [firstName, setFirstName] = useState('Stephane');
-	const [lastName, setLastName] = useState('Augier');
-	const [dob, setDob] = useState('20010618');
-	const [publicKey, setPublicKey] = useState('25f0c3f97b3832ca1312acf9e169e10f25dcd073967b53c7025d287253aa5f539c95d70af81f9c514a4c796d9acea1ba311b7b4d6df660d11e1b15114c9af3cc');
+	const [idNumber, setIdNumber] = useState('10');
+	const [firstName, setFirstName] = useState('Kevin');
+	const [lastName, setLastName] = useState('Taylor');
+	const [dob, setDob] = useState('19900314');
+	const [publicKey, setPublicKey] = useState('1eeaad156b849b08537b311813c295d7b83b715001b4e5bb74193511fa1bdc571543aca15d1a033867464719e2dcb4f7dea6b9aeacb1ea466b30813bb4d17324');
 
 	// Request ballot parameters
 	const [s, setS] = useState('');
@@ -48,7 +47,7 @@ const App = () => {
 	const [eBC2, setEBC2] = useState('');
 	const [encryptedBallot, setEncryptedBallot] = useState('');
 	const [ephemeralKey, setEphemeralKey] = useState('');
-	const [privateKey, setPrivateKey] = useState('1234');
+	const [privateKey, setPrivateKey] = useState('3afd9e134cd55eacd581ef6df9857466e4d5cd21c7ec4b9c16165e2a0717c096d2718b240856c08f5793e162eda8bc6f088e7d549e37e12688ef3484f0077f3c');
 	const [ballot, setBallot] = useState('');
 
 	// Vote parameters
